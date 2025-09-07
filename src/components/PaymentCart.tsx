@@ -44,7 +44,7 @@ export default function PaymentCard() {
           </div>
 
           {/* Karta raqami */}
-          <div className="text-2xl font-mono tracking-widest text-center">
+          <div className="text-lg md:text-2xl font-mono tracking-wide md:tracking-widest text-center break-words">
             {formatCardNumber(settings.card_number)}
           </div>
 
