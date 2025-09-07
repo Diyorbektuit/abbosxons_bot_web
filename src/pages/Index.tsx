@@ -431,62 +431,65 @@ const renderSubscription = () => (
       <PaymentCard />
 
       {/* Chek yuklash joyi */}
-      <Card className="p-6 border-2 border-dashed border-gray-300 bg-white rounded-xl shadow-sm">
-        <div className="space-y-2">
-          <Label className="font-medium text-gray-700">To‘lov chekini yuklang</Label>
-          
-          <Label htmlFor="payment-receipt" className="cursor-pointer w-full">
-            <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 bg-gray-50 hover:bg-gray-100 transition">
-              <div className="flex flex-col items-center space-y-4">
-                {paymentReceipt ? (
-                  <>
-                    <div className="w-16 h-16 rounded-xl bg-green-100 flex items-center justify-center">
-                      <FileImage className="h-8 w-8 text-green-600" />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-gray-800 font-medium">{paymentReceipt.name}</p>
-                      <p className="text-gray-500 text-sm">Fayl tanlandi</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-16 h-16 rounded-xl bg-gray-200 flex items-center justify-center">
-                      <Upload className="h-8 w-8 text-gray-600" />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-gray-700 font-medium">To‘lov chekini yuklang</p>
-                      <p className="text-gray-500 text-sm">JPG, PNG formatlarida</p>
-                    </div>
-                  </>
-                )}
+        <Card className="p-4 border-2 border-dashed border-gray-300 bg-white rounded-lg shadow-sm">
+          <div className="space-y-2">
+            <Label className="font-medium text-gray-700 text-sm">To‘lov chekini yuklang</Label>
+            
+            <Label htmlFor="payment-receipt" className="cursor-pointer w-full">
+              <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition">
+                <div className="flex flex-col items-center space-y-2">
+                  {paymentReceipt ? (
+                    <>
+                      <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
+                        <FileImage className="h-6 w-6 text-green-600" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-gray-800 text-sm font-medium truncate max-w-[180px]">
+                          {paymentReceipt.name}
+                        </p>
+                        <p className="text-gray-500 text-xs">Fayl tanlandi</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="w-12 h-12 rounded-lg bg-gray-200 flex items-center justify-center">
+                        <Upload className="h-6 w-6 text-gray-600" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-gray-700 text-sm font-medium">Chekni yuklang</p>
+                        <p className="text-gray-500 text-xs">JPG, PNG formatlar</p>
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          </Label>
+            </Label>
 
-          <Input
-            id="payment-receipt"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) setPaymentReceipt(file);
-            }}
-          />
-        </div>
-
-        {uploadMessage && (
-          <div
-            className={`text-sm p-3 mt-3 rounded-lg ${
-              uploadMessage.includes("muvaffaqiyatli")
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
-            }`}
-          >
-            {uploadMessage}
+            <Input
+              id="payment-receipt"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) setPaymentReceipt(file);
+              }}
+            />
           </div>
-        )}
-      </Card>
+
+          {uploadMessage && (
+            <div
+              className={`text-xs p-2 mt-2 rounded-md ${
+                uploadMessage.includes("muvaffaqiyatli")
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
+              {uploadMessage}
+            </div>
+          )}
+        </Card>
+
 
       <PrimaryButton 
         onClick={uploadPaymentReceipt} 
