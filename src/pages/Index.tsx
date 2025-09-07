@@ -29,7 +29,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ContactMenuItem } from "@/components/ContackMenuItem";
 
-type Page = "dashboard" | "payment-history" | "faq";
+type Page = "dashboard" | "subscription" | "card-input" | "profile" | "payment-history" | "faq";
 
 interface UserProfile {
   is_subscribed: string;
@@ -236,7 +236,12 @@ const Index = () => {
     }
   };
 
-  const handleBack = () => {
+ const handleBack = () => {
+    if (currentPage === "card-input") {
+      setCurrentPage("subscription");
+    } else {
+      setCurrentPage("dashboard");
+    }
     setCurrentPage("dashboard");
   };
 
@@ -291,118 +296,38 @@ const Index = () => {
           />
         )}
 
-
           {/* Payment Receipt Upload - Only show if not subscribed */}
-          {userProfile && (userProfile.is_subscribed === "no_subscribed" || userProfile.is_subscribed === "expired") && (
-            <Card className="p-8 bg-gradient-warning border-0 shadow-lg relative overflow-hidden animate-scale-in">
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-white/10 rounded-full" />
-              <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-white/5 rounded-full" />
-              
-              <div className="text-center space-y-6 relative z-10">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-warning-foreground">
-                       {userProfile.is_subscribed === "expired" 
-                        ? "Obunani yangilaysizmi?" 
-                        : "Obuna bo‘lasizmi?"}
-                  </h3>
-                  <h3 className="text-xl font-bold text-warning-foreground">
+            {userProfile && 
+              (userProfile.is_subscribed === "no_subscribed" || userProfile.is_subscribed === "expired") && (
+                <Card className="p-8 bg-gradient-warning border-0 shadow-lg relative overflow-hidden animate-scale-in">
+                  {/* Decorative elements */}
+                  <div className="absolute -top-4 -right-4 w-20 h-20 bg-white/10 rounded-full" />
+                  <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-white/5 rounded-full" />
+                  
+                  <div className="text-center space-y-6 relative z-10">
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-warning-foreground">
+                        {userProfile.is_subscribed === "expired" 
+                          ? "Obunani yangilaysizmi?" 
+                          : "Yopiq kanalga qo'shilish"}
+                      </h3>
+                      <p className="text-warning-foreground/90 text-sm">
                         Obuna narxi {subscriptionPrice ? subscriptionPrice.toLocaleString("uz-UZ") : "..."} so'm
-                  </h3>
+                      </p>
+                    </div>
+                    
+                    <Button 
+                      variant="outline"
+                      className="bg-white text-warning px-8 py-3 rounded-2xl font-semibold hover:bg-white/90"
+                      onClick={() => handleNavigation("subscription")}
+                    >
+                      Qo'shilish
+                    </Button>
+                  </div>
+                </Card>
+            )}
 
-                  <p className="text-warning-foreground/90 text-sm">To'lov amalga oshirgan bo'lsangiz, chekni yuklang</p>
-                </div>
-                
-                {!showPaymentUpload ? (
-                  <div className="flex gap-3 justify-center">
-                    <Button 
-                      variant="outline"
-                      className="bg-white text-warning px-8 py-3 rounded-2xl font-semibold hover:bg-white/90"
-                      onClick={() => setShowPaymentUpload(false)}
-                    >
-                      Yo'q
-                    </Button>
-                    <Button 
-                      variant="outline"
-                      className="bg-white text-warning px-8 py-3 rounded-2xl font-semibold hover:bg-white/90"
-                      onClick={() => setShowPaymentUpload(true)}
-                    >
-                      Ha
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <div className="flex flex-col items-center space-y-3">
-                      <Label htmlFor="payment-receipt" className="cursor-pointer w-full">
-                        <div className="border-2 border-dashed border-white/30 hover:border-white/50 transition-colors rounded-2xl p-8 bg-white/5 hover:bg-white/10">
-                          <div className="flex flex-col items-center space-y-4">
-                            {paymentReceipt ? (
-                              <>
-                                <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center">
-                                  <FileImage className="h-8 w-8 text-warning-foreground" />
-                                </div>
-                                <div className="text-center">
-                                  <p className="text-warning-foreground font-medium">{paymentReceipt.name}</p>
-                                  <p className="text-warning-foreground/70 text-sm">Fayl tanlandi</p>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center">
-                                  <Upload className="h-8 w-8 text-warning-foreground/70" />
-                                </div>
-                                <div className="text-center">
-                                  <p className="text-warning-foreground font-medium">To'lov chekini yuklang</p>
-                                  <p className="text-warning-foreground/70 text-sm">JPG, PNG formatlarida</p>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </Label>
-                      <Input
-                        id="payment-receipt"
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) setPaymentReceipt(file);
-                        }}
-                      />
-                    </div>
-                    
-                    {uploadMessage && (
-                      <div className={`text-sm p-3 rounded-lg ${uploadMessage.includes('muvaffaqiyatli') ? 'bg-success/20 text-success-foreground' : 'bg-destructive/20 text-destructive-foreground'}`}>
-                        {uploadMessage}
-                      </div>
-                    )}
-                    
-                    <div className="flex gap-3">
-                      <Button 
-                        variant="outline"
-                        className="flex-1 bg-white/10 text-warning-foreground border-white/30 hover:bg-white/20 py-3 rounded-2xl font-semibold"
-                        onClick={() => {
-                          setShowPaymentUpload(false);
-                          setPaymentReceipt(null);
-                          setUploadMessage(null);
-                        }}
-                      >
-                        Bekor qilish
-                      </Button>
-                      <Button 
-                        className="flex-1 bg-white text-warning hover:bg-white/90 py-3 rounded-2xl font-semibold transition-all duration-200 hover:scale-[1.02] disabled:opacity-50"
-                        onClick={uploadPaymentReceipt}
-                        disabled={!paymentReceipt || uploadLoading}
-                      >
-                        {uploadLoading ? "Yuklanmoqda..." : "Chekni yuborish"}
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </Card>
-          )}
+
 
           <div className="space-y-3">
             {/* Commented out for version 1
@@ -435,6 +360,206 @@ const Index = () => {
       </div>
     );
   };
+
+const renderSubscription = () => (
+  <div className="min-h-screen bg-background">
+    <Header title="Creaters.uz" showBack={true} onBack={handleBack} />
+    
+    <div className="p-4 space-y-6">
+      <div className="space-y-4">
+        <div className="space-y-3">
+          <p className="text-muted-foreground font-medium">Obuna narxi</p>
+          <div className="flex items-baseline gap-2">
+            <span className="text-5xl font-bold text-foreground tracking-tight">
+              {subscriptionPrice ? subscriptionPrice.toLocaleString("uz-UZ") : "…"}
+            </span>
+            <span className="text-xl text-muted-foreground font-medium">UZS</span>
+          </div>
+        </div>
+      </div>
+
+      <Card className="p-8 bg-gradient-card shadow-lg border-0 relative overflow-hidden">
+        {/* Decorative background */}
+        <div className="absolute top-0 right-0 w-24 h-24 bg-success/5 rounded-full -translate-y-12 translate-x-12" />
+        
+        <div className="space-y-6 relative z-10">
+          <h3 className="text-2xl font-bold text-foreground">Creaters.uz</h3>
+          
+          <div className="space-y-5">
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
+                <CheckCircle className="h-5 w-5 text-success" />
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold text-foreground text-lg">Eksklyuziv kontent</p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Matnlar, savol-javoblar va rivojlanishingizga yordam beradigan videolar
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
+                <CheckCircle className="h-5 w-5 text-success" />
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold text-foreground text-lg">Parallel muhit</p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Fikrlash va o‘sish istagidagi odamlar bilan muloqot qilish imkoni.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
+                <CheckCircle className="h-5 w-5 text-success" />
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold text-foreground text-lg">Haftasiga yangi 2 ta insho</p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Har dushanba va payshanba kunlari rivojlanish uchun insholar.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* Static karta raqami (admin kartasi) */}
+      <Card className="p-6 bg-gray-800 text-white shadow-lg rounded-xl">
+        <div className="space-y-6">
+          <div>
+            <p className="text-sm uppercase tracking-wider opacity-80">Karta raqami</p>
+            <p className="text-2xl font-bold tracking-widest">8600 1234 5678 9012</p>
+          </div>
+          <div className="flex justify-between items-center text-sm opacity-90">
+            <span>Creaters.uz</span>
+          </div>
+        </div>
+      </Card>
+
+      {/* Chek yuklash joyi */}
+      <Card className="p-6 border-2 border-dashed border-gray-300 bg-white rounded-xl shadow-sm">
+        <div className="space-y-2">
+          <Label className="font-medium text-gray-700">To‘lov chekini yuklang</Label>
+          
+          <Label htmlFor="payment-receipt" className="cursor-pointer w-full">
+            <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 bg-gray-50 hover:bg-gray-100 transition">
+              <div className="flex flex-col items-center space-y-4">
+                {paymentReceipt ? (
+                  <>
+                    <div className="w-16 h-16 rounded-xl bg-green-100 flex items-center justify-center">
+                      <FileImage className="h-8 w-8 text-green-600" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-800 font-medium">{paymentReceipt.name}</p>
+                      <p className="text-gray-500 text-sm">Fayl tanlandi</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-16 h-16 rounded-xl bg-gray-200 flex items-center justify-center">
+                      <Upload className="h-8 w-8 text-gray-600" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-700 font-medium">To‘lov chekini yuklang</p>
+                      <p className="text-gray-500 text-sm">JPG, PNG formatlarida</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </Label>
+
+          <Input
+            id="payment-receipt"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) setPaymentReceipt(file);
+            }}
+          />
+        </div>
+
+        {uploadMessage && (
+          <div
+            className={`text-sm p-3 mt-3 rounded-lg ${
+              uploadMessage.includes("muvaffaqiyatli")
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {uploadMessage}
+          </div>
+        )}
+      </Card>
+
+      <PrimaryButton 
+        onClick={uploadPaymentReceipt} 
+        disabled={!paymentReceipt || uploadLoading}
+      >
+        {uploadLoading ? "Yuklanmoqda..." : "Tasdiqlash"}
+      </PrimaryButton>
+    </div>
+  </div>
+);
+
+
+  const renderCardInput = () => (
+    <div className="min-h-screen bg-background">
+      <Header title="Parallel Muhit" showBack={true} onBack={handleBack} />
+      
+      <div className="p-4 space-y-6">
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold text-foreground">Bank kartasi ma'lumotlarini kiriting</h2>
+          
+          <div className="space-y-5">
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-muted-foreground">Karta raqami</label>
+              <Input 
+                placeholder="0000 0000 0000 0000" 
+                className="text-lg py-7 rounded-2xl border-2 focus:border-primary/50 transition-all duration-200 bg-card-accent"
+              />
+            </div>
+            
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-muted-foreground">Amal qilish muddati</label>
+              <Input 
+                placeholder="MM/YY" 
+                className="text-lg py-7 rounded-2xl border-2 focus:border-primary/50 transition-all duration-200 bg-card-accent"
+              />
+            </div>
+          </div>
+        </div>
+
+        <Card className="p-6 bg-gradient-secondary border-0 shadow-card">
+          <div className="text-center text-sm text-muted-foreground space-y-2 leading-relaxed">
+            <p>Xavfsizlik maqsadida sizning bank kartangiz</p>
+            <p>ma'lumotlari Click xizmatining serverlarida</p>
+            <p>saqlanadi. Sizning shaxsingizga oid hech qanday</p>
+            <p>ma'lumot saqlamaydi. <span className="text-primary underline font-medium">Click ofertasi</span></p>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 mt-6">
+            <span className="text-sm text-muted-foreground font-medium">Powered by</span>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-sm">
+                <div className="w-3.5 h-3.5 bg-white rounded-full"></div>
+              </div>
+              <span className="font-bold text-primary text-lg">click</span>
+            </div>
+          </div>
+        </Card>
+
+        <PrimaryButton>
+          Kodini olish
+        </PrimaryButton>
+      </div>
+    </div>
+  );
+
 
   const renderPaymentHistory = () => {
     const paymentsPerPage = 10;
@@ -603,6 +728,8 @@ const renderFAQ = () => {
       return renderPaymentHistory();
     case "faq":
       return renderFAQ();
+    case "subscription":
+      return renderSubscription();
     default:
       return renderDashboard();
   }
