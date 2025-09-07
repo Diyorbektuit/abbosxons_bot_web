@@ -1,7 +1,7 @@
 // src/components/PaymentCard.tsx
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { CreditCard } from "lucide-react"; // icon uchun
+import { CreditCard, Copy } from "lucide-react";
 
 interface MainSettings {
   id: number;
@@ -13,6 +13,7 @@ interface MainSettings {
 
 export default function PaymentCard() {
   const [settings, setSettings] = useState<MainSettings | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -24,15 +25,25 @@ export default function PaymentCard() {
       .catch((err) => {
         console.error("API dan ma'lumot olishda xato:", err);
       });
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   // karta raqamini formatlash
   const formatCardNumber = (num: string) =>
     num.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
 
+  const handleCopy = () => {
+    if (settings?.card_number) {
+      navigator.clipboard.writeText(settings.card_number);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+  };
+
   return (
-    <Card className="relative h-48 w-full md:w-[400px] rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-purple-600 via-indigo-700 to-indigo-900 text-white p-6">
+    <Card className="relative h-52 w-full md:w-[400px] rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-purple-600 via-indigo-700 to-indigo-900 text-white p-6">
       {settings ? (
         <div className="flex flex-col h-full justify-between">
           {/* Yuqori qismi */}
@@ -44,9 +55,18 @@ export default function PaymentCard() {
           </div>
 
           {/* Karta raqami */}
-          <div className="text-lg md:text-2xl font-mono tracking-wide md:tracking-widest text-center break-words">
-            {formatCardNumber(settings.card_number)}
+          <div
+            className="flex items-center justify-center gap-2 text-lg sm:text-xl md:text-2xl font-mono tracking-wide md:tracking-widest text-center cursor-pointer select-none transition active:scale-95"
+            onClick={handleCopy}
+          >
+            <span>{formatCardNumber(settings.card_number)}</span>
+            <Copy className="h-5 w-5 opacity-80" />
           </div>
+          {copied && (
+            <p className="text-xs text-green-300 text-center animate-fadeIn">
+              Nusxalandi!
+            </p>
+          )}
 
           {/* Pastki qismi */}
           <div className="flex justify-between items-center text-sm">

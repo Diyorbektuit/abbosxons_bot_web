@@ -363,7 +363,7 @@ const Index = () => {
 
 const renderSubscription = () => (
   <div className="min-h-screen bg-background">
-    <Header title="Creaters.uz" showBack={true} onBack={handleBack} />
+    <Header title="Creators Pro" showBack={true} onBack={handleBack} />
     
     <div className="p-4 space-y-6">
       <div className="space-y-4">
