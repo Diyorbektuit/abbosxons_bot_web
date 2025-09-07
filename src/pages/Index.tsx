@@ -218,8 +218,9 @@ const Index = () => {
       } else {
         setUploadMessage("Server xatoligi yuz berdi");
       }
-    } catch (error) {
-      setUploadMessage("Tarmoq xatoligi yuz berdi");
+    } catch (error: any) {
+      setUploadMessage(`Tarmoq xatoligi: ${error.message || error.toString()}`);
+    
     } finally {
       setUploadLoading(false);
     }
@@ -313,9 +314,6 @@ const Index = () => {
                           ? "Obunani yangilaysizmi?" 
                           : "Yopiq kanalga qo'shilish"}
                       </h3>
-                      <p className="text-warning-foreground/90 text-sm">
-                        Obuna narxi {subscriptionPrice ? subscriptionPrice.toLocaleString("uz-UZ") : "..."} so'm
-                      </p>
                     </div>
                     
                     <Button 
