@@ -253,7 +253,7 @@ const Index = () => {
     if (error) {
       return (
         <div className="min-h-screen bg-background">
-          <Header title="Creators.uz" showBack={false} />
+          <Header title="Creators Pro" showBack={false} />
           
           <div className="p-4 space-y-4">
             <div className="flex flex-col items-center justify-center py-16 space-y-4">
@@ -274,7 +274,7 @@ const Index = () => {
     if (loading) {
       return (
         <div className="min-h-screen bg-background">
-          <Header title="Creators.uz" showBack={false} />
+          <Header title="Creators Pro" showBack={false} />
           
           <div className="p-4 space-y-4">
             <div className="flex flex-col items-center justify-center py-16 space-y-4">
@@ -288,7 +288,7 @@ const Index = () => {
 
     return (
       <div className="min-h-screen bg-background">
-        <Header title="Creators.uz" showBack={false} />
+        <Header title="Creators Pro" showBack={false} />
         
         <div className="p-4 space-y-4">
           {userProfile?.rest_of_days !== 0 && (
@@ -383,7 +383,7 @@ const renderSubscription = () => (
       <div className="absolute top-0 right-0 w-24 h-24 bg-success/5 rounded-full -translate-y-12 translate-x-12" />
       
       <div className="space-y-6 relative z-10">
-        <h3 className="text-2xl font-bold text-foreground">Creators.uz</h3>
+        <h3 className="text-2xl font-bold text-foreground">Creators Pro</h3>
         
         <div className="space-y-5">
           <div className="flex items-start gap-4">

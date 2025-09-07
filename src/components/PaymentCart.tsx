@@ -53,7 +53,7 @@ export default function PaymentCard() {
             <span className="uppercase tracking-wide font-semibold">
               {settings.card_holder}
             </span>
-            <span className="text-xs opacity-80 font-medium">Creators.uz</span>
+            <span className="text-xs opacity-80 font-medium">Creators Pro</span>
           </div>
         </div>
       ) : (
