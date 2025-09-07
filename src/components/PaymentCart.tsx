@@ -1,6 +1,7 @@
 // src/components/PaymentCard.tsx
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
+import { CreditCard } from "lucide-react"; // icon uchun
 
 interface MainSettings {
   id: number;
@@ -26,21 +27,39 @@ export default function PaymentCard() {
     return () => { mounted = false; };
   }, []);
 
+  // karta raqamini formatlash
+  const formatCardNumber = (num: string) =>
+    num.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+
   return (
-    <Card className="p-6 bg-gray-800 text-white shadow-lg rounded-xl">
+    <Card className="relative h-48 w-full md:w-[400px] rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-purple-600 via-indigo-700 to-indigo-900 text-white p-6">
       {settings ? (
-        <div className="space-y-4">
-          <div>
-            <p className="text-sm uppercase tracking-wider opacity-80">Karta raqami</p>
-            <p className="text-2xl font-bold tracking-widest">{settings.card_number}</p>
+        <div className="flex flex-col h-full justify-between">
+          {/* Yuqori qismi */}
+          <div className="flex justify-between items-start">
+            {/* Chip */}
+            <div className="w-12 h-8 bg-yellow-300 rounded-md shadow-inner"></div>
+            {/* Logo / belgi */}
+            <CreditCard className="h-8 w-8 opacity-80" />
           </div>
-          <div className="flex justify-between items-center text-sm opacity-90">
-            <span>{settings.card_holder}</span>
-            <span className="text-xs opacity-60">Creaters.uz</span>
+
+          {/* Karta raqami */}
+          <div className="text-2xl font-mono tracking-widest text-center">
+            {formatCardNumber(settings.card_number)}
+          </div>
+
+          {/* Pastki qismi */}
+          <div className="flex justify-between items-center text-sm">
+            <span className="uppercase tracking-wide font-semibold">
+              {settings.card_holder}
+            </span>
+            <span className="text-xs opacity-80 font-medium">Creators.uz</span>
           </div>
         </div>
       ) : (
-        <p className="text-gray-300">Karta ma'lumotlari yuklanmoqda...</p>
+        <div className="flex items-center justify-center h-full">
+          <p className="text-gray-200 text-sm">Karta ma'lumotlari yuklanmoqda...</p>
+        </div>
       )}
     </Card>
   );
