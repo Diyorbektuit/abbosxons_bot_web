@@ -378,49 +378,32 @@ const renderSubscription = () => (
         </div>
       </div>
 
-    <Card className="p-8 bg-gradient-card shadow-lg border-0 relative overflow-hidden">
-      {/* Decorative background */}
-      <div className="absolute top-0 right-0 w-24 h-24 bg-success/5 rounded-full -translate-y-12 translate-x-12" />
-      
+      <Card className="p-8 bg-gradient-card shadow-lg border-0 relative overflow-hidden">
+  {/* Decorative background */}
+  <div className="absolute top-0 right-0 w-24 h-24 bg-success/5 rounded-full -translate-y-12 translate-x-12" />
+
       <div className="space-y-6 relative z-10">
         <h3 className="text-2xl font-bold text-foreground">Creators Pro</h3>
-        
-        <div className="space-y-5">
-          <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
-              <CheckCircle className="h-5 w-5 text-success" />
-            </div>
-            <div className="space-y-1">
-              <p className="font-semibold text-foreground text-lg">Trenddagi soundlar</p>
-              <p className="text-muted-foreground leading-relaxed">
-                Har oy eng so‘nggi va mashhur bo‘lgan soundlar jamlanmasi.
-              </p>
-            </div>
-          </div>
 
-          <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
-              <CheckCircle className="h-5 w-5 text-success" />
+        <div className="space-y-4">
+          {[
+            "Eng so'nggi va trentdagi soundlar",
+            "Lightroom presetlar (5 ta)",
+            "Pulli LUTlar (2 ta)",
+            "Colorgrading bo'yicha videodarslik (1 ta)",
+            "Ishni tezlashtiruvchi videodarsliklar (2 ta)",
+            "Jonli efirlar (2 ta)",
+            "Vakansiyalar",
+            "Bir martalik ishlar",
+            "Production jamoamizga qo'shilish imkoniyati",
+          ].map((item, idx) => (
+            <div key={idx} className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
+                <CheckCircle className="h-4 w-4 text-success" />
+              </div>
+              <p className="text-foreground text-base leading-relaxed">{item}</p>
             </div>
-            <div className="space-y-1">
-              <p className="font-semibold text-foreground text-lg">Eksklyuziv materiallar</p>
-              <p className="text-muted-foreground leading-relaxed">
-                Lightroom presetlar (5 ta), pulli LUTlar (2 ta) va maxsus videodarsliklar.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
-              <CheckCircle className="h-5 w-5 text-success" />
-            </div>
-            <div className="space-y-1">
-              <p className="font-semibold text-foreground text-lg">Jonli efirlar & Vakansiyalar</p>
-              <p className="text-muted-foreground leading-relaxed">
-                Har oy 2 ta jonli efir, ish imkoniyatlari va production jamoasiga qo‘shilish imkoniyati.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </Card>
