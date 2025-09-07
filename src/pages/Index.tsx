@@ -32,7 +32,7 @@ import { ContactMenuItem } from "@/components/ContackMenuItem";
 type Page = "dashboard" | "payment-history" | "faq";
 
 interface UserProfile {
-  is_subscribed: boolean;
+  is_subscribed: string;
   rest_of_days: number;
 }
 
@@ -283,14 +283,17 @@ const Index = () => {
         <Header title="Creators.uz" showBack={false} />
         
         <div className="p-4 space-y-4">
+          {userProfile?.rest_of_days !== 0 && (
           <BalanceCard 
             label="Obuna tugashiga"
             amount={userProfile?.rest_of_days?.toString() || "0"}
             currency="kun"
           />
+        )}
+
 
           {/* Payment Receipt Upload - Only show if not subscribed */}
-          {userProfile && !userProfile.is_subscribed && (
+          {userProfile && (userProfile.is_subscribed === "no_subscribed" || userProfile.is_subscribed === "expired") && (
             <Card className="p-8 bg-gradient-warning border-0 shadow-lg relative overflow-hidden animate-scale-in">
               {/* Decorative elements */}
               <div className="absolute -top-4 -right-4 w-20 h-20 bg-white/10 rounded-full" />
@@ -298,7 +301,11 @@ const Index = () => {
               
               <div className="text-center space-y-6 relative z-10">
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-warning-foreground">Obunani yangilaysizmi?</h3>
+                  <h3 className="text-xl font-bold text-warning-foreground">
+                       {userProfile.is_subscribed === "expired" 
+                        ? "Obunani yangilaysizmi?" 
+                        : "Obuna bo‘lasizmi?"}
+                  </h3>
                   <h3 className="text-xl font-bold text-warning-foreground">
                         Obuna narxi {subscriptionPrice ? subscriptionPrice.toLocaleString("uz-UZ") : "..."} so'm
                   </h3>
