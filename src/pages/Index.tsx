@@ -312,7 +312,7 @@ const Index = () => {
                       <h3 className="text-xl font-bold text-warning-foreground">
                         {userProfile.is_subscribed === "expired" 
                           ? "Obunani yangilaysizmi?" 
-                          : "Yopiq kanalga qo'shilish"}
+                          : "Yopiq community qo'shilish"}
                       </h3>
                     </div>
                     
@@ -326,7 +326,6 @@ const Index = () => {
                   </div>
                 </Card>
             )}
-
 
 
           <div className="space-y-3">
