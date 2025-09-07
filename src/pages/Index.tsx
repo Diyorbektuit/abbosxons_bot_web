@@ -387,7 +387,7 @@ const renderSubscription = () => (
         <div className="space-y-4">
           {[
             "Eng so'nggi va trentdagi soundlar",
-            "Lightroom presetlar (5 ta)",
+            "Lightroom presetlar (2 ta)",
             "Pulli LUTlar (2 ta)",
             "Colorgrading bo'yicha videodarslik (1 ta)",
             "Ishni tezlashtiruvchi videodarsliklar (2 ta)",
