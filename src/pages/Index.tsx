@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ContactMenuItem } from "@/components/ContackMenuItem";
+import PaymentCard from "@/components/PaymentCart";
 
 type Page = "dashboard" | "subscription" | "card-input" | "profile" | "payment-history" | "faq";
 
@@ -68,6 +69,7 @@ const Index = () => {
   const [uploadLoading, setUploadLoading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
   const [showPaymentUpload, setShowPaymentUpload] = useState(false);
+  
 
   // Extract API key from URL parameters
   const getApiKeyFromUrl = () => {
@@ -378,65 +380,55 @@ const renderSubscription = () => (
         </div>
       </div>
 
-      <Card className="p-8 bg-gradient-card shadow-lg border-0 relative overflow-hidden">
-        {/* Decorative background */}
-        <div className="absolute top-0 right-0 w-24 h-24 bg-success/5 rounded-full -translate-y-12 translate-x-12" />
+    <Card className="p-8 bg-gradient-card shadow-lg border-0 relative overflow-hidden">
+      {/* Decorative background */}
+      <div className="absolute top-0 right-0 w-24 h-24 bg-success/5 rounded-full -translate-y-12 translate-x-12" />
+      
+      <div className="space-y-6 relative z-10">
+        <h3 className="text-2xl font-bold text-foreground">Creators.uz</h3>
         
-        <div className="space-y-6 relative z-10">
-          <h3 className="text-2xl font-bold text-foreground">Creaters.uz</h3>
-          
-          <div className="space-y-5">
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
-                <CheckCircle className="h-5 w-5 text-success" />
-              </div>
-              <div className="space-y-1">
-                <p className="font-semibold text-foreground text-lg">Eksklyuziv kontent</p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Matnlar, savol-javoblar va rivojlanishingizga yordam beradigan videolar
-                </p>
-              </div>
+        <div className="space-y-5">
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
+              <CheckCircle className="h-5 w-5 text-success" />
             </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
-                <CheckCircle className="h-5 w-5 text-success" />
-              </div>
-              <div className="space-y-1">
-                <p className="font-semibold text-foreground text-lg">Parallel muhit</p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Fikrlash va o‘sish istagidagi odamlar bilan muloqot qilish imkoni.
-                </p>
-              </div>
+            <div className="space-y-1">
+              <p className="font-semibold text-foreground text-lg">Trenddagi soundlar</p>
+              <p className="text-muted-foreground leading-relaxed">
+                Har oy eng so‘nggi va mashhur bo‘lgan soundlar jamlanmasi.
+              </p>
             </div>
+          </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
-                <CheckCircle className="h-5 w-5 text-success" />
-              </div>
-              <div className="space-y-1">
-                <p className="font-semibold text-foreground text-lg">Haftasiga yangi 2 ta insho</p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Har dushanba va payshanba kunlari rivojlanish uchun insholar.
-                </p>
-              </div>
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
+              <CheckCircle className="h-5 w-5 text-success" />
+            </div>
+            <div className="space-y-1">
+              <p className="font-semibold text-foreground text-lg">Eksklyuziv materiallar</p>
+              <p className="text-muted-foreground leading-relaxed">
+                Lightroom presetlar (5 ta), pulli LUTlar (2 ta) va maxsus videodarsliklar.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <div className="w-8 h-8 rounded-full bg-success/15 flex items-center justify-center flex-shrink-0 mt-1">
+              <CheckCircle className="h-5 w-5 text-success" />
+            </div>
+            <div className="space-y-1">
+              <p className="font-semibold text-foreground text-lg">Jonli efirlar & Vakansiyalar</p>
+              <p className="text-muted-foreground leading-relaxed">
+                Har oy 2 ta jonli efir, ish imkoniyatlari va production jamoasiga qo‘shilish imkoniyati.
+              </p>
             </div>
           </div>
         </div>
-      </Card>
+      </div>
+    </Card>
 
       {/* Static karta raqami (admin kartasi) */}
-      <Card className="p-6 bg-gray-800 text-white shadow-lg rounded-xl">
-        <div className="space-y-6">
-          <div>
-            <p className="text-sm uppercase tracking-wider opacity-80">Karta raqami</p>
-            <p className="text-2xl font-bold tracking-widest">8600 1234 5678 9012</p>
-          </div>
-          <div className="flex justify-between items-center text-sm opacity-90">
-            <span>Creaters.uz</span>
-          </div>
-        </div>
-      </Card>
+      <PaymentCard />
 
       {/* Chek yuklash joyi */}
       <Card className="p-6 border-2 border-dashed border-gray-300 bg-white rounded-xl shadow-sm">
