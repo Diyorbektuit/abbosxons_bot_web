@@ -407,6 +407,20 @@ const renderSubscription = () => (
       </div>
     </Card>
 
+    {/* To'lov bo'yicha yo'riqnoma */}
+    <Card className="p-6 bg-white shadow-md border rounded-xl">
+      <h3 className="text-lg font-semibold text-foreground mb-4">
+        To‘lov bo‘yicha yo‘riqnoma
+      </h3>
+
+      <ol className="space-y-3 list-decimal list-inside text-muted-foreground text-sm leading-relaxed">
+        <li>Pastdagi karta raqamdan nusxa oling</li>
+        <li>Nusxalangan karta raqamga belgilangan miqdorda to‘lov amalga oshiring</li>
+        <li>To‘lovning chekini screenshot qilib, pastdagi yuklash bo‘limiga yuklang</li>
+        <li>6-12 soat oralig‘ida to‘lovingiz tekshiriladi va qabul qilingach, communityga qo‘shilish uchun link yuboriladi</li>
+      </ol>
+    </Card>
+
       {/* Static karta raqami (admin kartasi) */}
       <PaymentCard />
 
